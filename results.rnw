@@ -1,0 +1,179 @@
+
+%https://www.gnu.org/software/emacs/manual/html_node/emacs/Fill-Commands.html
+%https://academic.oup.com/journals/pages/authors/latex_files
+%latexmk -pdf -pvc -auxdir=/Users/larshovdanmolden/Documents/Output/  article2_mancap.tex
+
+\documentclass[review]{elsarticle}\usepackage[]{graphicx}\usepackage[]{color}
+\usepackage{rotating}
+\usepackage{arydshln}
+\usepackage{graphicx}
+\usepackage{hhline}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage[dvipsnames,table]{xcolor}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+%\usepackage{booktabs}
+\usepackage{array}
+\input{preamble.tex}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+
+
+%%%% TURN OFF PAGE NUMBER FOR INCLUSION IN THESIS
+\pagenumbering{gobble}
+%%%%%%%
+
+
+\begin{document}
+
+\begin{frontmatter}
+
+
+\title{Unpacking the quality of the firm}
+%\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
+
+%% Group authors per affiliation:
+%\author{Lars Hovdan Molden \fnref{myfootnote}}
+%\address{Kongensgt 42, 7713 Steinkjer}
+%\fntext[myfootnote]{Nord University Business School}
+
+%% or include affiliations in footnotes:
+%\author[mymainaddress,mysecondaryaddress]{Elsevier Inc}
+%\ead[url]{www.elsevier.com}
+
+%\author[mysecondaryaddress]{Global Customer Service\corref{mycorrespondingauthor}}
+%\cortext[mycorrespondingauthor]{Corresponding author}
+%\ead{support@elsevier.com}
+
+%\address[mymainaddress]{1600 John F Kennedy Boulevard, Philadelphia}
+%\address[mysecondaryaddress]{360 Park Avenue South, New York}
+
+\begin{abstract}
+
+\end{abstract}
+
+\begin{keyword}
+\texttt{Intrapreneurship, human capital,  }
+\end{keyword}
+
+\end{frontmatter}
+
+%\linenumbers
+
+
+
+
+
+
+Table \ref{tab:time} is regressions where:
+
+\begin{equation}
+  SP_{i,t} = \alpha + \beta_{1,c} P_i^c \times T_t + \epsilon_i
+\end{equation}
+
+Here $SP$ is the spin off variable indicating if firm $i$ had a spin off at time $t$. $P$
+is a vector of management practices as drawn from the LASSO procedure so that $ P_i^c$
+refers to the $c$ practice of firm $i$. This is time invariant. Finally, $T$ is a time
+variable indicating the time that has gone since the sample started.
+
+In the first model (\emph{spinp}) the dependent variable can include more than one spin off pr
+firm $i$ at time $t$, whereas the alternative model (\emph{spinpalt}) concerns a spin off
+variable where spin off is coded 1 and no spin off is coded 0 in each year. This means
+that it only discriminates between firms that had a spin off at time $t$ and those who did
+not. The first model is run using \verb poisson, the other using \verb logit. All models
+are run sequentially including only one of the $P$ variable at the time.
+
+\begin{table}
+  \caption{Regressing each covariate interaction with time}
+  \label{tab:time}
+
+<<results="asis",echo=FALSE>>=
+timeintlat
+
+@
+
+\end{table}
+
+Table \ref{tab:lassoreg} shows the results of including all the variables suggested from the
+LASSO procedure. I have also removed some of them to see how that impacted the sample
+size. The sample size is not considerably larger
+
+
+<<results="asis",echo=FALSE>>=
+
+stargazer(addvarres,single.row=TRUE,report = "vc*",title="Regression results trying to omit vars with many missing", label="tab:lassoreg")
+
+@
+
+
+\section{Innovation projects development over time}
+
+<<results="asis",echo=FALSE>>=
+
+plot(yearpro,type="l", main="Number of projects per year")
+
+plot(yearcostsummary$yrvec,yearcostsummary$avgyearcost,type="l",
+     ylim=c(0,1.4),
+     ylab="million NOK - average",
+     col="blue")
+
+lines(yearcostsummary$yrvec,yearcostsummary$avgyearcostother, col="red")
+title(main="Average budgeted tax credit pr firm")
+legend(2007, 0.2, legend=c("Avg budgeted tax credit", "Avg budget other grants"),
+       col=c("blue", "red"), lty=1:1)
+@
+
+Correlations between IRS and other grants is 0.65, but 0.85 after the 2009 hike in the tax
+credit cap. The cap increased from total budget amounts of 4 millions to 8 millions. 
+
+\end{document}
+
