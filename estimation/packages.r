@@ -1,26 +1,33 @@
 
 
 
-list.of.packages = c("ltm",
-                     "feather",
-                     "kableExtra",
-                     "readstata13",
-                     "plyr",
-                     "dplyr",
-                     "lme4",
-                     "lavaan",
-                     "kutils",
-                     "semPlot",
-                     "semTools",
-                     "lme4",
-                     "nlme",
+list.of.packages = c("kableExtra",
+                     "foreign",
+                     "stringr",
+                     "Hmisc",
                      "reshape2",
-                     "plm",
-                     "reporttools",
+                     "dplyr",
+                     "broom",
+                     "tableHTML",
+                     "condformat",
+                     "factoextra",
                      "stargazer",
-                     "knitr",
-                     "interplot",
-                     "kableExtra")
+                     "xtable",
+                     "pixiedust",
+                     "RColorBrewer",
+                     "glmnet",
+                     "mice",
+                     "basicTrendline",
+                     "oaxaca",
+                     "GeneralOaxaca",
+                     "plm",
+                     "BaylorEdPsych",
+                     "jtools",
+                     "lfe",
+                     "openxlsx",
+                     "lavaan"
+                     )
+
 
 
 

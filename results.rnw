@@ -102,78 +102,457 @@
 \end{abstract}
 
 \begin{keyword}
-\texttt{Intrapreneurship, human capital,  }
+\texttt{Intrapreneurship, internal and external opportunitieis, capabilities  }
 \end{keyword}
 
 \end{frontmatter}
 
 %\linenumbers
 
+\section{Intro}
+
+The main argument of this paper is that firms are getting increasingly better at providing
+entrepreneurial opportunities within the firm, and that this leads entrepreneurial
+employees to stay with the firm rather than pursue their ambitions outside. Based on a
+survey on capabilities of 1100 firms we build constructs for \emph{internal} and
+\emph{external} opportunities created by the strategic capabilities of the firm. We show
+how these have an opposite effect on the probability of spin-offs from the firm. Moreover,
+we theorize on the moderating effects of various types of collaborations (open or closed
+innovation process) and show empirical results to support these propositions. 
+
+\section{Latest results}
+
+
+\begin{table}[h]
+  \begin{singlespace}
+    \begin{tabular}{l|c|p{7cm}}
+
+      \textbf{Variable} & \textbf{Type} & \textbf{Description}\\
+      \hline
+      Spinoff & Ordinal & This counts the number of spinoffs at the firm level\\
+      External Opportunities (EXT) & Continuous & A weighted average of indicators of
+                                                  external opportunities to the firm (see
+                                                  tables below) \\
+      Internal Opportunities (INT) & Continuous & A weighted average of indicators of
+                                                  internal opportunities to the firm (see
+                                                  tables below) \\
+      Firm Age & Continuous & Age of the focal firm\\
+      ln Firm Size & Continuous & logarithm of firm assets\\
+      ln Internal R\&D spending & Continuous & logarithm of internal R\&D spending\\
+      Quality of Human Capital & Continuous & Fraction of salary spending over sales\\
+      R\&D Collaboration & Binary & Indicates whether firm has external R\&D collaborations\\
+      Centrality of R\&D efforts & Binary & Indicates whether firm has centralized R\&D
+                                            unit or if its up to the business units and
+                                            hence part of operations\\
 
 
 
 
 
-Table \ref{tab:time} is regressions where:
 
-\begin{equation}
-  SP_{i,t} = \alpha + \beta_{1,c} P_i^c \times T_t + \epsilon_i
-\end{equation}
-
-Here $SP$ is the spin off variable indicating if firm $i$ had a spin off at time $t$. $P$
-is a vector of management practices as drawn from the LASSO procedure so that $ P_i^c$
-refers to the $c$ practice of firm $i$. This is time invariant. Finally, $T$ is a time
-variable indicating the time that has gone since the sample started.
-
-In the first model (\emph{spinp}) the dependent variable can include more than one spin off pr
-firm $i$ at time $t$, whereas the alternative model (\emph{spinpalt}) concerns a spin off
-variable where spin off is coded 1 and no spin off is coded 0 in each year. This means
-that it only discriminates between firms that had a spin off at time $t$ and those who did
-not. The first model is run using \verb poisson, the other using \verb logit. All models
-are run sequentially including only one of the $P$ variable at the time.
-
-\begin{table}
-  \caption{Regressing each covariate interaction with time}
-  \label{tab:time}
-
-<<results="asis",echo=FALSE>>=
-timeintlat
-
-@
-
+    \end{tabular}
+  \end{singlespace}
 \end{table}
 
-Table \ref{tab:lassoreg} shows the results of including all the variables suggested from the
-LASSO procedure. I have also removed some of them to see how that impacted the sample
-size. The sample size is not considerably larger
 
 
-<<results="asis",echo=FALSE>>=
 
-stargazer(addvarres,single.row=TRUE,report = "vc*",title="Regression results trying to omit vars with many missing", label="tab:lassoreg")
+Table \ref{tab:reg1} shows some preliminary results on the main analysis of the
+paper. External and internal
 
+
+
+
+<<tabs, results="asis", echo=FALSE >>=
+xtable(ivtab, align = c("l","|l", "|p{9cm}", "|p{1.5cm}"))
 @
 
 
-\section{Innovation projects development over time}
 
-<<results="asis",echo=FALSE>>=
+\begin{table*}[!htb]
+  \centering
+  \caption{Regression - Base regressions }
+  \resizebox{0.99\textwidth}{!}{
 
-plot(yearpro,type="l", main="Number of projects per year")
+<<result1, results="asis", echo=FALSE, >>=
 
-plot(yearcostsummary$yrvec,yearcostsummary$avgyearcost,type="l",
-     ylim=c(0,1.4),
-     ylab="million NOK - average",
-     col="blue")
 
-lines(yearcostsummary$yrvec,yearcostsummary$avgyearcostother, col="red")
-title(main="Average budgeted tax credit pr firm")
-legend(2007, 0.2, legend=c("Avg budgeted tax credit", "Avg budget other grants"),
-       col=c("blue", "red"), lty=1:1)
+stargazer(modlist1,
+          omit=c("reg","sic"),
+          add.lines =list(c("Regional Fixed Effects",rep("YES", length(modlist1))),
+                          c("Industry Fixed Effects",rep("YES", length(modlist1))),
+                          c("Pseudo $R^2$",r1,r2,r3,r4,r5,r6,r7)),
+
+          single.row=FALSE, column.sep.width = "1pt", omit.stat=c("LL","ser","f","aic"),
+          no.space=FALSE,
+          dep.var.labels=c("Spinoffs"),
+          ## order=c(2,1,44,45,3,4,5,6),
+
+          ##  covariate.labels= c("Internal Opportunities (INT)",
+          ##                      "External Opportunities (EXT)",
+          ##                      "INT x R\\&D Importance to the firm",
+          ##                      "EXT x R\\&D Importance to the firm",
+          ##                      "R\\&D Importance to the firm",
+          ##                      "Firm Age",
+          ##                      "ln Firm Size",
+          ##                      "ln R\\&D spending",
+          ##                      "Human capital",
+          ##                      "R\\&D cooperation",
+          ##                      "Constant"),
+
+
+          title= "Regression results for model C", font.size="scriptsize",float=FALSE
+          )
+
 @
+}
+ \label{tab:reg1}
+\end{table*}
 
-Correlations between IRS and other grants is 0.65, but 0.85 after the 2009 hike in the tax
-credit cap. The cap increased from total budget amounts of 4 millions to 8 millions. 
+
+
+%% \section{Different types of R\& D collaborations}
+%% This section presents three models where we have devised a variable capturing different
+%% types of R\&D collaborations. We have two types: collaborations with \emph{uniersities},
+%% and collaborations with \emph{suppliers}. The respondents answer on a likert scale from 1
+%% to 7 "to what extent they engage in collaboration" with each of these. The raw variables
+%% did not work. Hence I created a dummy which is 1 if the respondent answered higher than a
+%% certain cutoff. The following three models presents the results from different cut off
+%% points.
+
+
+
+%% \begin{table*}[!htb]
+%%   \centering
+%%   \caption{Regression - splitting up different types of RD collaboration -cutoff larger
+%%     than 3}
+%%   \resizebox{0.99\textwidth}{!}{
+%% <<result2a, results="asis", echo=FALSE, >>=
+
+
+
+%% stargazer(ml1, omit=c("reg","sic"),
+%%          add.lines =list(c("Regional Fixed Effects",rep("YES", length(ml1))),
+%%                           c("Industry Fixed Effects",rep("YES", length(ml1))),
+%%                           c("Pseudo $R^2$",r1)),
+
+%%           single.row=FALSE,
+%%           column.sep.width = "1pt",
+%%           omit.stat=c("LL","ser","f","aic"),
+%%           no.space=FALSE,
+%%           dep.var.labels=c("Spinoffs"),
+%%            ### order=c(2,1,44,45,3,4,5,6),
+
+%%            ## covariate.labels= c("Internal Opportunities (INT)",
+%%            ##                     "External Opportunities (EXT)",
+%%            ##                     "INT x R\\&D Centralization",
+%%            ##                     "EXT x R\\&D Centralization",
+%%            ##                     "R\\&D Centralization",
+%%            ##                     "Firm Age",
+%%            ##                     "ln Firm Size",
+%%            ##                     "ln R\\&D spending",
+%%            ##                     "Human capital",
+%%            ##                     "R\\&D cooperation",
+%%            ##                     "Constant"),
+
+
+%%           title= "", font.size="scriptsize",float=FALSE
+%%           )
+
+%% @
+%% }
+%%  \label{tab:reg1}
+%% \end{table*}
+
+
+%% \begin{table*}[!htb]
+%%   \centering
+%%   \caption{Regression - splitting up different types of RD collaboration -cutoff larger
+%%     than 4}
+%%   \resizebox{0.99\textwidth}{!}{
+%% <<result2b, results="asis", echo=FALSE, >>=
+
+
+
+%% stargazer(ml2, omit=c("reg","sic"),
+%%          add.lines =list(c("Regional Fixed Effects",rep("YES", length(ml2))),
+%%                           c("Industry Fixed Effects",rep("YES", length(ml2))),
+%%                           c("Pseudo $R^2$",r2)),
+
+%%           single.row=FALSE,
+%%           column.sep.width = "1pt",
+%%           omit.stat=c("LL","ser","f","aic"),
+%%           no.space=FALSE,
+%%           dep.var.labels=c("Spinoffs"),
+%%            ### order=c(2,1,44,45,3,4,5,6),
+
+%%            ## covariate.labels= c("Internal Opportunities (INT)",
+%%            ##                     "External Opportunities (EXT)",
+%%            ##                     "INT x R\\&D Centralization",
+%%            ##                     "EXT x R\\&D Centralization",
+%%            ##                     "R\\&D Centralization",
+%%            ##                     "Firm Age",
+%%            ##                     "ln Firm Size",
+%%            ##                     "ln R\\&D spending",
+%%            ##                     "Human capital",
+%%            ##                     "R\\&D cooperation",
+%%            ##                     "Constant"),
+
+
+%%           title= "", font.size="scriptsize",float=FALSE
+%%           )
+
+%% @
+%% }
+%%  \label{tab:reg1}
+%% \end{table*}
+
+%% \begin{table*}[!htb]
+%%   \centering
+%%   \caption{Regression - splitting up different types of RD collaboration -cutoff larger
+%%     than 5}
+%%   \resizebox{0.99\textwidth}{!}{
+%% <<result2c, results="asis", echo=FALSE, >>=
+
+
+%% stargazer(ml3, omit=c("reg","sic"),
+%%          add.lines =list(c("Regional Fixed Effects",rep("YES", length(ml3))),
+%%                           c("Industry Fixed Effects",rep("YES", length(ml3))),
+%%                           c("Pseudo $R^2$",r3)),
+
+%%           single.row=FALSE,
+%%           column.sep.width = "1pt",
+%%           omit.stat=c("LL","ser","f","aic"),
+%%           no.space=FALSE,
+%%           dep.var.labels=c("Spinoffs"),
+%%            ### order=c(2,1,44,45,3,4,5,6),
+
+%%            ## covariate.labels= c("Internal Opportunities (INT)",
+%%            ##                     "External Opportunities (EXT)",
+%%            ##                     "INT x R\\&D Centralization",
+%%            ##                     "EXT x R\\&D Centralization",
+%%            ##                     "R\\&D Centralization",
+%%            ##                     "Firm Age",
+%%            ##                     "ln Firm Size",
+%%            ##                     "ln R\\&D spending",
+%%            ##                     "Human capital",
+%%            ##                     "R\\&D cooperation",
+%%            ##                     "Constant"),
+
+
+%%           title= "", font.size="scriptsize",float=FALSE
+%%           )
+
+%% @
+%% }
+%%  \label{tab:reg1}
+%% \end{table*}
+
+
+
+
+\section{Looking at all projects in all firms in sample}
+
+I started from the 25000 projects in the data set. Each of these projects indicate if they
+have collaboration with other firms and/or research institutes such as universities. We have 1100 firms where we have
+variables on internal and external opportunities. When combining the data sets we have 838
+firms with 6477 projects.
+
+The results under is two tables. The first shows the interactions with the variables
+"orgdummy" which is indicating the "importance of RD to the firm". "sambb" indicate if the
+project is collaborating with other companies. "sambf" says if they are collaborating with
+research organizations or universities.
+
+\begin{table*}[!htb]
+  \centering
+  \caption{All projects - logistic regression spinoff or not}
+  \resizebox{0.99\textwidth}{!}{
+<<result3a, results="asis", echo=FALSE, >>=
+
+
+
+stargazer(modlistf1, omit=c("reg","sic"),
+         add.lines =list(c("Regional Fixed Effects",rep("YES", length(modlistf1))),
+                          c("Industry Fixed Effects",rep("YES", length(modlistf1))),
+                          c("Pseudo $R^2$",r2)),
+
+          single.row=FALSE,
+          column.sep.width = "1pt",
+          omit.stat=c("LL","ser","f","aic"),
+          no.space=FALSE,
+          dep.var.labels=c("Spinoffs"),
+           ### order=c(2,1,44,45,3,4,5,6),
+
+           ## covariate.labels= c("Internal Opportunities (INT)",
+           ##                     "External Opportunities (EXT)",
+           ##                     "INT x R\\&D Centralization",
+           ##                     "EXT x R\\&D Centralization",
+           ##                     "R\\&D Centralization",
+           ##                     "Firm Age",
+           ##                     "ln Firm Size",
+           ##                     "ln R\\&D spending",
+           ##                     "Human capital",
+           ##                     "R\\&D cooperation",
+           ##                     "Constant"),
+
+
+          title= "", font.size="scriptsize",float=FALSE
+          )
+
+@
+}
+ \label{tab:reg1}
+\end{table*}
+
+\begin{table*}[!htb]
+  \centering
+  \caption{All projects - logistic regression spinoff or not}
+  \resizebox{0.99\textwidth}{!}{
+<<result3b, results="asis", echo=FALSE, >>=
+
+
+stargazer(modlistf2, omit=c("reg","sic"),
+         add.lines =list(c("Regional Fixed Effects",rep("YES", length(modlistf2))),
+                          c("Industry Fixed Effects",rep("YES", length(modlistf2))),
+                          c("Pseudo $R^2$",r2)),
+
+          single.row=FALSE,
+          column.sep.width = "1pt",
+          omit.stat=c("LL","ser","f","aic"),
+          no.space=FALSE,
+          dep.var.labels=c("Spinoffs"),
+           ### order=c(2,1,44,45,3,4,5,6),
+
+           ## covariate.labels= c("Internal Opportunities (INT)",
+           ##                     "External Opportunities (EXT)",
+           ##                     "INT x R\\&D Centralization",
+           ##                     "EXT x R\\&D Centralization",
+           ##                     "R\\&D Centralization",
+           ##                     "Firm Age",
+           ##                     "ln Firm Size",
+           ##                     "ln R\\&D spending",
+           ##                     "Human capital",
+           ##                     "R\\&D cooperation",
+           ##                     "Constant"),
+
+
+          title= "", font.size="scriptsize",float=FALSE
+          )
+
+@
+}
+ \label{tab:reg1}
+\end{table*}
+
+
+
+%% Table \ref{tab:time} is regressions where:
+
+%% \begin{equation}
+%%   SP_{i,t} = \alpha + \beta_{1,c} P_i^c \times T_t + \epsilon_i
+%% \end{equation}
+
+%% Here $SP$ is the spin off variable indicating if firm $i$ had a spin off at time $t$. $P$
+%% is a vector of management practices as drawn from the LASSO procedure so that $ P_i^c$
+%% refers to the $c$ practice of firm $i$. This is time invariant. Finally, $T$ is a time
+%% variable indicating the time that has gone since the sample started.
+
+%% In the first model (\emph{spinp}) the dependent variable can include more than one spin off pr
+%% firm $i$ at time $t$, whereas the alternative model (\emph{spinpalt}) concerns a spin off
+%% variable where spin off is coded 1 and no spin off is coded 0 in each year. This means
+%% that it only discriminates between firms that had a spin off at time $t$ and those who did
+%% not. The first model is run using \verb poisson, the other using \verb logit. All models
+%% are run sequentially including only one of the $P$ variable at the time.
+
+%% %% \begin{table}
+%% %%   \caption{Regressing each covariate interaction with time}
+%% %%   \label{tab:time}
+
+%% %% <<results="asis",echo=FALSE>>=
+%% %% timeintlat
+
+%% %% @
+
+%% %% \end{table}
+
+%% Table \ref{tab:lassoreg} shows the results of including all the variables suggested from the
+%% LASSO procedure. I have also removed some of them to see how that impacted the sample
+%% size. The sample size is not considerably larger
+
+
+%% %% <<results="asis",echo=FALSE>>=
+
+%% %% stargazer(addvarres,single.row=TRUE,report = "vc*",title="Regression results trying to omit vars with many missing", label="tab:lassoreg")
+
+%% %% @
+
+
+%% \section{Innovation projects development over time}
+
+%% %% <<results="asis",echo=FALSE>>=
+
+%% %% plot(yearpro,type="l", main="Number of projects per year")
+
+%% %% plot(yearcostsummary$yrvec,yearcostsummary$avgyearcost,type="l",
+%% %%      ylim=c(0,1.4),
+%% %%      ylab="million NOK - average",
+%% %%      col="blue")
+
+%% %% lines(yearcostsummary$yrvec,yearcostsummary$avgyearcostother, col="red")
+%% %% title(main="Average budgeted tax credit pr firm")
+%% %% legend(2007, 0.2, legend=c("Avg budgeted tax credit", "Avg budget other grants"),
+%% %%        col=c("blue", "red"), lty=1:1)
+%% %% @
+
+%% Correlations between IRS and other grants is 0.65, but 0.85 after the 2009 hike in the tax
+%% credit cap. The cap increased from total budget amounts of 4 millions to 8 millions.
+
+%% \newpage
+%% \section{Changes in items over time}
+
+%% I took the LASSO results and plotted changes between time 0 and time 1 as well as their
+%% standard deviation. The plot below shows how most firms on average had a decline in their
+%% items, but the average is small. Variation, however, is considerable
+
+%% %% <<results="asis",echo=FALSE>>=
+%% %% p
+%% %% @
+
+%% \section{Oaxacia Blinder decomposition}
+
+%% I use the LASSO regression results to pick the variables included. These are included in
+%% the analysis. The model is as follows. We include all the items from the LASSO model as
+%% listed below. We have observations at two points in time. $t_0$ denotes 2006 and $t_1$
+%% means the follow up in 2014. We have spin off data attached to the same period so the
+%% number of spin offs per firm are calculated in two periods. One series of spin offs are
+%% for $t_0$ whereas the other is for $t_1$. The cut off point is 2011 meaning that all spin
+%% offs before 2011 is related to items measured at time 0, where as spin offs in or after
+%% 2011 is coupled to items measured at time 1. This i am not fully confident in, but lets discuss.
+
+
+%% See next page
+
+%% \newpage
+%% \begin{figure}
+%%   \resizebox{0.8\textwidth}{!} {
+%% <<results="asis",echo=FALSE>>=
+%% plot(oxresults, components = c("endowments","coefficients"))
+
+
+%% @
+%% }
+%% \end{figure}
+
+
+%% \begin{table}
+%% \resizebox{0.8\textwidth}{!} {
+%% <<results='asis',echo=FALSE>>=
+%% print(xtable(qlasso, align=c('p{0.2in}',"p{0.5in}","p{5in}")),floating=FALSE)
+%% @
+%% }
+%% \end{table}
+
+
 
 \end{document}
 
